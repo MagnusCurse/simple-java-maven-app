@@ -1,14 +1,29 @@
 pipeline {
-    agent any
-     tools {
-       jdk 'Java17'
-       maven 'Maven 3.9.8'
+    agent {
+        docker {
+            image 'maven:3.9.0'
+            args '-v /root/.m2:/root/.m2'
+        }
     }
     stages {
         stage('Build') {
             steps {
-                // This sh step runs the Maven command to cleanly build your Java application without running any tests.
                 sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
