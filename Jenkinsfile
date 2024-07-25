@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Java') {
+        stage('Build') {
             steps {
                 sh 'env | grep -e PATH -e JAVA_HOME'
                 sh 'which java'
