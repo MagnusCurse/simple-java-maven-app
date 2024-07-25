@@ -18,4 +18,17 @@ pipeline {
             }
         }
     }
+    stage('Test') {
+        steps {
+            // Execute Maven unit tests
+            sh 'mvn test'
+        }
+        // Executes after the steps are completed
+        post {
+            // always means it will continue regardless of success or failure of the steps
+            always {
+                junit 'target/surefire-reports/*.xml'
+            }
+        }
+    }
 }
