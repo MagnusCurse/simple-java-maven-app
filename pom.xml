@@ -27,6 +27,13 @@
           <version>3.13.0</version>
           <configuration>
             <release>17</release>
+            <!-- 设置 Maven 连接的超时时间 -->
+            <httpConfiguration>
+              <get>
+                <connectionTimeout>60000</connectionTimeout>
+                <readTimeout>60000</readTimeout>
+              </get>
+            </httpConfiguration>
           </configuration>
         </plugin>
       </plugins>
